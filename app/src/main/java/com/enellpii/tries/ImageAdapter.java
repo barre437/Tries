@@ -7,7 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.HashMap;
 import java.util.Random;
+import java.util.StringTokenizer;
 
 /**
  * Created by melissa on 6/20/17.
@@ -21,7 +23,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return mThumbIds.length - 1;
+        return letterMap.size() - 1;
     }
 
     public Object getItem(int position) {
@@ -44,26 +46,30 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+
         Random rand = new Random();
         int r = rand.nextInt(26);
-        imageView.setImageResource(mThumbIds[r]);
+        char ch = (char) (r + 97);
+
+        imageView.setImageResource(letterMap.get(String.valueOf(ch)));
         return imageView;
     }
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.a, R.drawable.b,
-            R.drawable.c, R.drawable.d,
-            R.drawable.e, R.drawable.f,
-            R.drawable.g, R.drawable.h,
-            R.drawable.i, R.drawable.j,
-            R.drawable.k, R.drawable.l,
-            R.drawable.m, R.drawable.n,
-            R.drawable.o, R.drawable.p,
-            R.drawable.q, R.drawable.r,
-            R.drawable.s, R.drawable.t,
-            R.drawable.u, R.drawable.v,
-            R.drawable.w, R.drawable.x,
-            R.drawable.y, R.drawable.z
-    };
+    private static HashMap<String, Integer> letterMap;
+    static {
+        letterMap = new HashMap<String, Integer>();
+        letterMap.put("a", R.drawable.a); letterMap.put("b", R.drawable.b);
+        letterMap.put("c", R.drawable.c); letterMap.put("d", R.drawable.d);
+        letterMap.put("e", R.drawable.e); letterMap.put("f", R.drawable.f);
+        letterMap.put("g", R.drawable.g); letterMap.put("h", R.drawable.h);
+        letterMap.put("i", R.drawable.i); letterMap.put("j", R.drawable.j);
+        letterMap.put("k", R.drawable.k); letterMap.put("l", R.drawable.l);
+        letterMap.put("m", R.drawable.m); letterMap.put("n", R.drawable.n);
+        letterMap.put("o", R.drawable.o); letterMap.put("p", R.drawable.p);
+        letterMap.put("q", R.drawable.q); letterMap.put("r", R.drawable.r);
+        letterMap.put("s", R.drawable.s); letterMap.put("t", R.drawable.t);
+        letterMap.put("u", R.drawable.u); letterMap.put("v", R.drawable.v);
+        letterMap.put("w", R.drawable.w); letterMap.put("x", R.drawable.x);
+        letterMap.put("y", R.drawable.y); letterMap.put("z", R.drawable.z);
+    }
 }
