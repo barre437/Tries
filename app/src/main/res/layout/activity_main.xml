@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     android:columnWidth="90dp"
     android:numColumns="5"
-    android:verticalSpacing="10dp"
-    android:horizontalSpacing="1dp"
+    android:verticalSpacing="0dip"
+    android:horizontalSpacing="0dip"
     android:stretchMode="columnWidth"
     android:gravity="center"
+    android:adjustViewBounds="true"
     />

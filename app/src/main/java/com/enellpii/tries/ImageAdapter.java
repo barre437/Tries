@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.Random;
+
 /**
  * Created by melissa on 6/20/17.
  */
@@ -19,7 +21,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return mThumbIds.length - 1;
     }
 
     public Object getItem(int position) {
@@ -36,31 +38,32 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(275, 400));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams(295, 395));
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding(0, 0, 0, 0);
         } else {
             imageView = (ImageView) convertView;
         }
-
-        imageView.setImageResource(mThumbIds[position]);
+        Random rand = new Random();
+        int r = rand.nextInt(26);
+        imageView.setImageResource(mThumbIds[r]);
         return imageView;
     }
 
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2,
+            R.drawable.a, R.drawable.b,
+            R.drawable.c, R.drawable.d,
+            R.drawable.e, R.drawable.f,
+            R.drawable.g, R.drawable.h,
+            R.drawable.i, R.drawable.j,
+            R.drawable.k, R.drawable.l,
+            R.drawable.m, R.drawable.n,
+            R.drawable.o, R.drawable.p,
+            R.drawable.q, R.drawable.r,
+            R.drawable.s, R.drawable.t,
+            R.drawable.u, R.drawable.v,
+            R.drawable.w, R.drawable.x,
+            R.drawable.y, R.drawable.z
     };
 }
