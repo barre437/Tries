@@ -52,10 +52,14 @@ public class ImageAdapter extends BaseAdapter {
         char ch = (char) (r + 97);
 
         imageView.setImageResource(letterMap.get(String.valueOf(ch)));
+        imageView.setId(r+97);
         return imageView;
     }
 
-    private static HashMap<String, Integer> letterMap;
+    public HashMap<String, Integer> getLetterMap(){
+        return letterMap;
+    }
+    public static HashMap<String, Integer> letterMap;
     static {
         letterMap = new HashMap<String, Integer>();
         letterMap.put("a", R.drawable.a); letterMap.put("b", R.drawable.b);

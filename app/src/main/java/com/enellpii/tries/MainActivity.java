@@ -1,8 +1,10 @@
 package com.enellpii.tries;
 
 import android.content.res.AssetManager;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -14,6 +16,10 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
 
     private ModelViewPresenterComponents.TriePresenterContract mPresenter;
     public static AssetManager assetManager;
+
+    private GestureDetectorCompat mDetector;
+    String word = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -21,22 +27,17 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
         assetManager = getAssets();
         setupModelViewPresenterComponents();
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        mDetector = new GestureDetectorCompat(this, new TriesGestureListener());
+
+        final GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
 
-        gridview.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           public void onItemSelected(AdapterView<?> parent, View v, int position, long id){
-
-           }
-           public void onNothingSelected(AdapterView<?> parent) {
-
-           }
-        });
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position,
-                        Toast.LENGTH_LONG).show();
+                char letter = (char) gridview.getChildAt(position).getId();
+                word = word + String.valueOf(letter);
+                System.out.println(word);
             }
         });
     }
