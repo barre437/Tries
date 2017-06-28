@@ -1,7 +1,6 @@
 package com.enellpii.tries;
 
 import android.content.res.AssetManager;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
     private VelocityTracker mVelocityTracker = null;
     String word = "";
     int prevPos;
+    int[] posCollector = new int[25];
+    int tracker = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,15 +30,21 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
         setupModelViewPresenterComponents();
 
         final GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+        ImageAdapter ad = new ImageAdapter(this);
+        gridview.setAdapter(ad);
 
         gridview.setOnTouchListener(new AdapterView.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 int action = MotionEventCompat.getActionMasked(event);
+
                 float currentX = event.getX();
                 float currentY = event.getY();
+
                 int position = gridview.pointToPosition((int) currentX, (int) currentY);
+
                 if (prevPos != position){
+                    posCollector[tracker] = position;
+                    tracker++;
                     char letter = (char) gridview.getChildAt(position).getId();
                     word = word + String.valueOf(letter);
                     System.out.println(word);
@@ -54,12 +61,19 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
                         Log.d(TAG,"Action was MOVE");
                         return true;
                     case (MotionEvent.ACTION_UP) :
-                        if(mPresenter.getTrie().search(word))
+                        if(mPresenter.getTrie().search(word)) {
                             Log.d(TAG, "TRUE " + word + " is a word.");
+                            for(int i = 0; i < tracker; i++){
+                                System.out.println(posCollector[i]);
+                                gridview.getAdapter().getView(posCollector[i],
+                                        gridview.getChildAt(posCollector[i]), null);
+                            }
+                        }
                         else
                             Log.d(TAG, "FALSE " + word + " isn't a word.");
                         Log.d(TAG,"Action was UP");
                         word = "";
+                        tracker = 0;
                         return true;
                     case (MotionEvent.ACTION_CANCEL) :
                         Log.d(TAG,"Action was CANCEL");
@@ -73,14 +87,6 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
                 }
             }
         });
-        /*gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                char letter = (char) gridview.getChildAt(position).getId();
-                word = word + String.valueOf(letter);
-                System.out.println(word);
-            }
-        });*/
     }
 
     public void setupModelViewPresenterComponents(){
