@@ -18,6 +18,7 @@ public interface ModelViewPresenterComponents {
     interface TriePresenterContract{
         void refresh();
         void notifyModelUpdated();
+        Trie getTrie();
     }
 
     /** Model Operations

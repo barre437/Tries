@@ -23,4 +23,9 @@ public class TriePresenter implements ModelViewPresenterComponents.TriePresenter
     public void notifyModelUpdated() {
         mView.notifyGridUpdated();
     }
+
+    @Override
+    public Trie getTrie(){
+        return mModel.getTrie();
+    }
 }

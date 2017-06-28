@@ -41,7 +41,7 @@ public class TrieModel implements ModelViewPresenterComponents.Model {
 
     @Override
     public Trie getTrie() {
-        return null;
+        return trie;
     }
 
     @Override
