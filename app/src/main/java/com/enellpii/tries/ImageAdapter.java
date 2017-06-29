@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private RandomLetter rand = new RandomLetter();
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -46,12 +47,10 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Random rand = new Random();
-        int r = rand.nextInt(26);
-        char ch = (char) (r + 97);
+        char ch = rand.getLetter();
 
         imageView.setImageResource(letterMap.get(String.valueOf(ch)));
-        imageView.setId(r+97);
+        imageView.setId((int) ch);
         return imageView;
     }
 
