@@ -1,14 +1,20 @@
 package com.enellpii.tries;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import java.util.HashMap;
 import java.util.Random;
+
+import static com.enellpii.tries.R.attr.height;
 
 /**
  * Created by melissa on 6/20/17.
@@ -17,6 +23,7 @@ import java.util.Random;
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private RandomLetter rand = new RandomLetter();
+
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -40,7 +47,7 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(295, 395));
+            imageView.setLayoutParams(new GridView.LayoutParams((int) MainActivity.width, (int) MainActivity.height));
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding(0, 0, 0, 0);
         } else {

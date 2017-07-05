@@ -4,12 +4,16 @@ import android.content.res.AssetManager;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity implements ModelViewPresenterComponents.View{
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
     int prevPos;
     int[] posCollector = new int[25];
     int tracker = 0;
+    public static double width, height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,10 +34,19 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
         assetManager = getAssets();
         setupModelViewPresenterComponents();
 
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay()
+                .getMetrics(displaymetrics);
+        width = displaymetrics.widthPixels/5;
+        height = displaymetrics.heightPixels/5.6;
+
         final GridView gridview = (GridView) findViewById(R.id.gridview);
         ImageAdapter ad = new ImageAdapter(this);
         gridview.setAdapter(ad);
-
+        gridview.setColumnWidth(GridView.AUTO_FIT);
+        gridview.setVerticalSpacing(0);
+        gridview.setHorizontalSpacing(0);
+        gridview.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         gridview.setOnTouchListener(new AdapterView.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 int action = MotionEventCompat.getActionMasked(event);
@@ -58,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
                         return true;
                     case (MotionEvent.ACTION_MOVE) :
 
-                        Log.d(TAG,"Action was MOVE");
+                        //Log.d(TAG,"Action was MOVE");
                         return true;
                     case (MotionEvent.ACTION_UP) :
                         if(mPresenter.getTrie().search(word)) {
@@ -74,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements ModelViewPresente
                         Log.d(TAG,"Action was UP");
                         word = "";
                         tracker = 0;
+                        prevPos = 26;
                         return true;
                     case (MotionEvent.ACTION_CANCEL) :
                         Log.d(TAG,"Action was CANCEL");
